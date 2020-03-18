@@ -38,7 +38,10 @@ namespace HealthBars
             "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonPimple2",
             "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonPimple3",
             "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonGoatFillet1Vanish",
-            "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonGoatFillet2Vanish"
+            "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonGoatFillet2Vanish",
+            "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonGoatRhoa1Vanish",
+            "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonGoatRhoa2Vanish",
+            "Metadata/Monsters/InvisibleFire/InvisibleFireAfflictionCorpseDegen"
         };
 
         private IngameUIElements ingameUI;
