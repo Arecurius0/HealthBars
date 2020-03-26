@@ -346,21 +346,52 @@ namespace HealthBars
             bar.BackGround.Inflate(1, 1);
             Graphics.DrawFrame(bar.BackGround, bar.Settings.Outline, 1);
 
-            if (bar.Settings.ShowPercents)
-            {
-                Graphics.DrawText($"{Math.Floor(bar.HpPercent * 100).ToString(CultureInfo.InvariantCulture)}",
-                    new Vector2(bar.BackGround.Right, bar.BackGround.Center.Y - Graphics.Font.Size / 2f),
-                    bar.Settings.PercentTextColor);
-            }
+            ShowPercents(bar);
+            ShowNumbersInHealthbar(bar);
+        }
 
+        private void ShowNumbersInHealthbar(HealthBar bar)
+        {
+            if (!bar.Settings.ShowHealthText && !bar.Settings.ShowEnergyShieldText) return;
+
+            string healthBarText = "";
             if (bar.Settings.ShowHealthText)
             {
-                var formattableString = $"{bar.Life.CurHP}/{bar.MaxHp}";
-
-                Graphics.DrawText(formattableString,
-                    new Vector2(bar.BackGround.Center.X, bar.BackGround.Center.Y - Graphics.Font.Size / 2f),
-                    bar.Settings.HealthTextColor, FontAlign.Center);
+                healthBarText = $"{bar.Life.CurHP.ToString("N0")}/{bar.Life.MaxHP.ToString("N0")}";
+            } 
+            else if (bar.Settings.ShowEnergyShieldText)
+            {
+                healthBarText = $"{bar.Life.CurES.ToString("N0")}/{bar.Life.MaxES.ToString("N0")}";
             }
+
+            Graphics.DrawText(healthBarText,
+                new Vector2(bar.BackGround.Center.X, bar.BackGround.Center.Y - Graphics.Font.Size / 2f),
+                bar.Settings.HealthTextColor, 
+                FontAlign.Center);
+        }
+
+        private void ShowPercents(HealthBar bar)
+        {
+            if (!bar.Settings.ShowHealthPercents && !bar.Settings.ShowEnergyShieldPercents) return;
+
+            float percents = 0;
+            if (bar.Settings.ShowHealthPercents)
+            {
+                percents = bar.Life.HPPercentage;
+            }
+            else if (bar.Settings.ShowEnergyShieldPercents)
+            {
+                percents = bar.Life.ESPercentage;
+            }
+
+            Graphics.DrawText(FloatToPercentString(percents),
+                new Vector2(bar.BackGround.Right, bar.BackGround.Center.Y - Graphics.Font.Size / 2f),
+                bar.Settings.PercentTextColor);
+        }
+
+        private string FloatToPercentString (float number)
+        {
+            return $"{Math.Floor(number * 100).ToString(CultureInfo.InvariantCulture)}";
         }
 
         public override void EntityAdded(Entity Entity)
