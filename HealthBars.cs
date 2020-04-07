@@ -146,49 +146,32 @@ namespace HealthBars
             ReadIgnoreFile();
         }
 
+        private bool SkipHealthBar(HealthBar healthBar)
+        {
+            if (healthBar == null) return true;
+            if (healthBar.Settings == null) return true;
+            if (!healthBar.Settings.Enable) return true;
+            if (!healthBar.Entity.IsAlive) return true;
+            if (healthBar.HpPercent < 0.001f) return true;
+            if (healthBar.Type == CreatureType.Minion && healthBar.HpPercent * 100 > Settings.ShowMinionOnlyBelowHp) return true;
+            if (healthBar.Entity.League == LeagueType.Legion && healthBar.Entity.IsHidden && healthBar.Entity.Rarity != MonsterRarity.Unique) return true;
+
+            return false;
+        }
+
         public void HpBarWork(HealthBar healthBar)
         {
-            if (!healthBar.Settings.Enable)
-            {
-                healthBar.Skip = true;
-                return;
-            }
-
-            if (!healthBar.Entity.IsAlive)
-            {
-                healthBar.Skip = true;
-                return;
-            }
+            if (healthBar == null) return;
+            healthBar.Skip = SkipHealthBar(healthBar);
+            if (healthBar.Skip) return;
 
             var healthBarDistance = healthBar.Distance;
-
             if (healthBarDistance > Settings.LimitDrawDistance)
             {
                 healthBar.Skip = true;
                 return;
             }
 
-            healthBar.HpPercent = healthBar.Life.HPPercentage;
-
-            if (healthBar.HpPercent < 0.001f)
-            {
-                healthBar.Skip = true;
-                return;
-            }
-
-            if (healthBar.Type == CreatureType.Minion && healthBar.HpPercent * 100 > Settings.ShowMinionOnlyBelowHp)
-            {
-                healthBar.Skip = true;
-                return;
-            }
-
-            if (healthBar.Entity.League == LeagueType.Legion && healthBar.Entity.IsHidden && healthBar.Entity.Rarity != MonsterRarity.Unique)
-            {
-                healthBar.Skip = true;
-                return;
-            }
-
-            var _ = healthBar.IsHostile;
             var worldCoords = healthBar.Entity.Pos;
             worldCoords.Z += Settings.GlobalZ;
             var mobScreenCoords = camera.WorldToScreen(worldCoords);
@@ -235,30 +218,26 @@ namespace HealthBars
         {
             CanTick = true;
 
-            if (ingameUICheckVisible.Value)
+            if (ingameUICheckVisible.Value
+                || camera == null
+                || GameController.Area.CurrentArea.IsTown && !Settings.ShowInTown)
             {
                 CanTick = false;
                 return;
             }
 
-            if (camera == null)
-            {
-                CanTick = false;
-                return;
-            }
-
-            if (GameController.Area.CurrentArea.IsTown && !Settings.ShowInTown)
-            {
-                CanTick = false;
-                return;
-            }
-
-            foreach (var validEntity in GameController.EntityListWrapper.ValidEntitiesByType[EntityType.Monster])
+            var monster = GameController.EntityListWrapper.ValidEntitiesByType[EntityType.Monster];
+            foreach (var validEntity in monster)
             {
                 var healthBar = validEntity.GetHudComponent<HealthBar>();
-
-                if (healthBar != null)
+                try
+                {
                     HpBarWork(healthBar);
+                }
+                catch (Exception e)
+                {
+                    DebugWindow.LogError(e.Message);
+                }
             }
 
             foreach (var validEntity in GameController.EntityListWrapper.ValidEntitiesByType[EntityType.Player])
@@ -272,8 +251,7 @@ namespace HealthBars
 
         public override void Render()
         {
-            if (!CanTick)
-                return;
+            if (!CanTick) return;
 
             foreach (var entity in GameController.EntityListWrapper.ValidEntitiesByType[EntityType.Monster])
             {
@@ -320,7 +298,6 @@ namespace HealthBars
                 PlayerBar.BackGround = new RectangleF(result.X - scaledWidth / 2f, result.Y - scaledHeight / 2f, scaledWidth,
                     scaledHeight);
 
-                PlayerBar.HpPercent = PlayerBar.Life.HPPercentage;
                 PlayerBar.HpWidth = PlayerBar.HpPercent * scaledWidth;
                 PlayerBar.EsWidth = PlayerBar.Life.ESPercentage * scaledWidth;
                 DrawBar(PlayerBar);
@@ -396,16 +373,13 @@ namespace HealthBars
 
         public override void EntityAdded(Entity Entity)
         {
-            if (Entity.Type != EntityType.Monster && Entity.Type != EntityType.Player || Entity.Address == GameController.Player.Address ||
-                Entity.Type == EntityType.Daemon) return;
+            if (Entity.Type != EntityType.Monster && Entity.Type != EntityType.Player 
+                || Entity.Address == GameController.Player.Address 
+                || Entity.Type == EntityType.Daemon) return;
 
             if (Entity.GetComponent<Life>() != null && !Entity.IsAlive) return;
             if (IgnoredSum.Any(x => Entity.Path.StartsWith(x))) return;
             Entity.SetHudComponent(new HealthBar(Entity, Settings));
-        }
-
-        public override void EntityRemoved(Entity Entity)
-        {
         }
     }
 }

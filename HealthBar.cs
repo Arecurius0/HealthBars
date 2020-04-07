@@ -34,7 +34,6 @@ namespace HealthBars
         public RectangleF BackGround;
         public bool CanNotDie;
         public double DiedFrames = 0;
-        public Func<bool> IsHidden;
         private bool isHostile;
         private readonly Action OnHostileChange;
         public bool Skip = false;
@@ -43,8 +42,6 @@ namespace HealthBars
         {
             Entity = entity;
             _distance = new TimeCache<float>(() => entity.DistancePlayer, 200);
-
-            IsHidden = () => entity.IsHidden;
 
             // If ignored entity found, skip
             foreach (var _entity in IgnoreEntitiesList)
@@ -83,7 +80,7 @@ namespace HealthBars
             }
         }
 
-        public float HpPercent { get; set; }
+        public float HpPercent => Life.HPPercentage;
         public float Distance => _distance.Value;
         public Life Life => Entity.GetComponent<Life>();
         public Entity Entity { get; }
@@ -95,7 +92,7 @@ namespace HealthBars
         {
             get
             {
-                if (IsHidden())
+                if (IsHidden(Entity))
                     return Color.LightGray;
 
                 if (HpPercent <= 0.1f)
@@ -104,6 +101,20 @@ namespace HealthBars
                 return Settings.Color;
             }
         }
+
+        private bool IsHidden(Entity entity)
+        {
+            try
+            {
+                return entity.IsHidden;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
 
         public float HpWidth { get; set; }
         public float EsWidth { get; set; }
