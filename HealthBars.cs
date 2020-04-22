@@ -53,7 +53,6 @@ namespace HealthBars
         private Vector2 oldplayerCord;
         private Entity Player;
         private HealthBar PlayerBar;
-        private double time;
         private RectangleF windowRectangle;
         private Size2F windowSize;
 
