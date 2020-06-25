@@ -82,8 +82,10 @@ namespace HealthBars
             PercentTextColor = 0xffffffff;
             HealthTextColor = 0xffffffff;
             HealthTextColorUnder10Percent = 0xffff00ff;
-            ShowPercents = new ToggleNode(false);
+            ShowHealthPercents = new ToggleNode(false);
+            ShowEnergyShieldPercents = new ToggleNode(false);
             ShowHealthText = new ToggleNode(false);
+            ShowEnergyShieldText = new ToggleNode(false);
             ShowFloatingCombatDamage = new ToggleNode(false);
             FloatingCombatTextSize = new RangeNode<int>(15, 10, 30);
             FloatingCombatDamageColor = SharpDX.Color.Yellow;
@@ -96,8 +98,10 @@ namespace HealthBars
         public UnitSettings(uint color, uint outline, uint percentTextColor, bool showText) : this(color, outline)
         {
             PercentTextColor = percentTextColor;
-            ShowPercents.Value = showText;
+            ShowHealthPercents.Value = showText;
+            ShowEnergyShieldPercents.Value = showText;
             ShowHealthText.Value = showText;
+            ShowEnergyShieldText.Value = showText;
         }
 
         public RangeNode<float> Width { get; set; }
@@ -109,8 +113,10 @@ namespace HealthBars
         public ColorNode PercentTextColor { get; set; }
         public ColorNode HealthTextColor { get; set; }
         public ColorNode HealthTextColorUnder10Percent { get; set; }
-        public ToggleNode ShowPercents { get; set; }
+        public ToggleNode ShowHealthPercents { get; set; }
+        public ToggleNode ShowEnergyShieldPercents { get; set; }
         public ToggleNode ShowHealthText { get; set; }
+        public ToggleNode ShowEnergyShieldText { get; set; }
         public RangeNode<int> TextSize { get; set; }
         [Menu("Floating Combat Text")]
         public ToggleNode ShowFloatingCombatDamage { get; set; }
