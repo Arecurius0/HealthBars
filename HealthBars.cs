@@ -45,7 +45,10 @@ namespace HealthBars
             "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonGoatRhoa1Vanish",
             "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonGoatRhoa2Vanish",
             "Metadata/Monsters/InvisibleFire/InvisibleFireAfflictionCorpseDegen",
-            "Metadata/Monsters/InvisibleFire/InvisibleFireAfflictionDemonColdDegenUnique"
+            "Metadata/Monsters/InvisibleFire/InvisibleFireAfflictionDemonColdDegenUnique",
+            // Conquerors Runes Ignores
+            "Metadata/Monsters/AtlasExiles/CrusaderInfluenceMonsters/CrusaderArcaneRune",
+            // "Metadata/Monsters/AtlasExiles/BasiliskInfluenceMonsters/BasiliskBurrowingViper"
         };
 
         private IngameUIElements ingameUI;
@@ -346,7 +349,7 @@ namespace HealthBars
 
             Graphics.DrawText(healthBarText,
                 new Vector2(bar.BackGround.Center.X, bar.BackGround.Center.Y - Graphics.Font.Size / 2f),
-                bar.Settings.HealthTextColor, 
+                bar.Settings.HealthTextColor,
                 FontAlign.Center);
         }
 
@@ -382,6 +385,7 @@ namespace HealthBars
 
             if (Entity.GetComponent<Life>() != null && !Entity.IsAlive) return;
             if (IgnoredSum.Any(x => Entity.Path.StartsWith(x))) return;
+            if (Entity.Path.StartsWith("Metadata/Monsters/AtlasExiles/BasiliskInfluenceMonsters/BasiliskBurrowingViper") && (Entity.Rarity != MonsterRarity.Unique)) return;
             Entity.SetHudComponent(new HealthBar(Entity, Settings));
         }
     }
