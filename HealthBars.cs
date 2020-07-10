@@ -153,7 +153,9 @@ namespace HealthBars
             if (!healthBar.Entity.IsAlive) return true;
             if (healthBar.HpPercent < 0.001f) return true;
             if (healthBar.Type == CreatureType.Minion && healthBar.HpPercent * 100 > Settings.ShowMinionOnlyBelowHp) return true;
-            if (healthBar.Entity.League == LeagueType.Legion && healthBar.Entity.IsHidden && healthBar.Entity.Rarity != MonsterRarity.Unique) return true;
+            if (healthBar.Entity.League == LeagueType.Legion && healthBar.Entity.IsHidden 
+                && healthBar.Entity.Rarity != MonsterRarity.Unique 
+                && healthBar.Entity.Rarity != MonsterRarity.Rare) return true;
 
             return false;
         }
