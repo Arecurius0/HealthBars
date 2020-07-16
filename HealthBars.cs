@@ -23,14 +23,7 @@ namespace HealthBars
 
         private List<string> Ignored = new List<string>
         {
-            "Metadata/Monsters/Daemon/SilverPoolChillDaemon",
-            "Metadata/Monsters/Daemon",
-            "Metadata/Monsters/Frog/FrogGod/SilverOrb",
-            "Metadata/Monsters/Frog/FrogGod/SilverPool",
-            "Metadata/Monsters/Labyrinth/GoddessOfJusticeMapBoss@7",
-            "Metadata/Monsters/Labyrinth/GoddessOfJustice@",
-            "Metadata/Monsters/LeagueBetrayal/MasterNinjaCop",
-            //Delirium Ignores
+            // Delirium Ignores
             "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonEyes1",
             "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonEyes2",
             "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonEyes3",
@@ -44,11 +37,66 @@ namespace HealthBars
             "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonGoatFillet2Vanish",
             "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonGoatRhoa1Vanish",
             "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonGoatRhoa2Vanish",
-            "Metadata/Monsters/InvisibleFire/InvisibleFireAfflictionCorpseDegen",
-            "Metadata/Monsters/InvisibleFire/InvisibleFireAfflictionDemonColdDegenUnique",
-            // Conquerors Runes Ignores
+            
+            // Conquerors Ignores
+            "Metadata/Monsters/AtlasExiles/AtlasExile1@",
             "Metadata/Monsters/AtlasExiles/CrusaderInfluenceMonsters/CrusaderArcaneRune",
-            // "Metadata/Monsters/AtlasExiles/BasiliskInfluenceMonsters/BasiliskBurrowingViper"
+            "Metadata/Monsters/AtlasExiles/AtlasExile2_",
+            "Metadata/Monsters/AtlasExiles/EyrieInfluenceMonsters/EyrieFrostnadoDaemon",
+            "Metadata/Monsters/AtlasExiles/AtlasExile3@",
+            "Metadata/Monsters/AtlasExiles/AtlasExile3AcidPitDaemon",
+            "Metadata/Monsters/AtlasExiles/AtlasExile3BurrowingViperMelee",
+            "Metadata/Monsters/AtlasExiles/AtlasExile3BurrowingViperRanged",
+            "Metadata/Monsters/AtlasExiles/AtlasExile4@",
+            "Metadata/Monsters/AtlasExiles/AtlasExile4ApparitionCascade",
+            "Metadata/Monsters/AtlasExiles/AtlasExile5Apparition",
+            "Metadata/Monsters/AtlasExiles/AtlasExile5Throne",
+
+            // Incursion Ignores
+            "Metadata/Monsters/LeagueIncursion/VaalSaucerRoomTurret",
+            "Metadata/Monsters/LeagueIncursion/VaalSaucerTurret",
+            "Metadata/Monsters/LeagueIncursion/VaalSaucerTurret",
+            
+            // Betrayal Ignores
+            "Metadata/Monsters/LeagueBetrayal/BetrayalTaserNet",
+            "Metadata/Monsters/LeagueBetrayal/FortTurret/FortTurret1Safehouse",
+            "Metadata/Monsters/LeagueBetrayal/FortTurret/FortTurret1",
+            "Metadata/Monsters/LeagueBetrayal/MasterNinjaCop",
+
+            // Legion Ignores
+            "Metadata/Monsters/LegionLeague/LegionVaalGeneralProjectileDaemon",
+            "Metadata/Monsters/LegionLeague/LegionSergeantStampedeDaemon",
+
+            // Random Ignores
+            "Metadata/Monsters/InvisibleFire/InvisibleSandstorm_",
+            "Metadata/Monsters/InvisibleFire/InvisibleFrostnado",
+            "Metadata/Monsters/InvisibleFire/InvisibleFireAfflictionDemonColdDegen",
+            "Metadata/Monsters/InvisibleFire/InvisibleFireAfflictionDemonColdDegenUnique",
+            "Metadata/Monsters/InvisibleFire/InvisibleFireAfflictionCorpseDegen",
+            "Metadata/Monsters/InvisibleFire/InvisibleFireEyrieHurricane",
+
+            "Metadata/Monsters/InvisibleCurse/InvisibleFrostbiteStationary",
+            "Metadata/Monsters/InvisibleCurse/InvisibleConductivityStationary",
+
+            "Metadata/Monsters/InvisibleAura/InvisibleWrathStationary",
+
+            "Metadata/Monsters/LeagueSynthesis/SynthesisDroneBossTurret1",
+            "Metadata/Monsters/LeagueSynthesis/SynthesisDroneBossTurret2",
+            "Metadata/Monsters/LeagueSynthesis/SynthesisDroneBossTurret3",
+            "Metadata/Monsters/LeagueSynthesis/SynthesisDroneBossTurret4",
+
+            "Metadata/Monsters/LeagueBestiary/RootSpiderBestiaryAmbush",
+
+            // "Metadata/Monsters/Labyrinth/GoddessOfJustice",
+            // "Metadata/Monsters/Labyrinth/GoddessOfJusticeMapBoss",
+            "Metadata/Monsters/Frog/FrogGod/SilverOrb",
+            "Metadata/Monsters/Frog/FrogGod/SilverPool",
+            "Metadata/Monsters/LunarisSolaris/SolarisCelestialFormAmbushUniqueMap",
+            "Metadata/Monsters/Invisible/MaligaroSoulInvisibleBladeVortex",
+            "Metadata/Monsters/Daemon",
+            "Metadata/Monsters/Daemon/MaligaroBladeVortexDaemon",
+            "Metadata/Monsters/Daemon/SilverPoolChillDaemon",
+            "Metadata/Monsters/AvariusCasticus/AvariusCasticusStatue",
         };
 
         private IngameUIElements ingameUI;
