@@ -26,7 +26,7 @@ namespace HealthBars
         private const int DPS_CHECK_TIME = 1000;
         private const int DPS_FAST_CHECK_TIME = 200;
         private const int DPS_POP_TIME = 2000;
-        private static readonly List<string> IgnoreEntitiesList = new List<string> {"MonsterFireTrap2", "MonsterBlastRainTrap"};
+        private static readonly List<string> IgnoreEntitiesList = new List<string> {"MonsterFireTrap2", "MonsterBlastRainTrap", "VolatileDeadCore"};
         private readonly Stopwatch dpsStopwatch = Stopwatch.StartNew();
         private readonly TimeCache<float> _distance;
         private bool _init;
@@ -35,7 +35,7 @@ namespace HealthBars
         public bool CanNotDie;
         public double DiedFrames = 0;
         private bool isHostile;
-        private readonly Action OnHostileChange;
+        private readonly Action OnHostileChange = delegate { };
         public bool Skip = false;
 
         public HealthBar(Entity entity, HealthBarsSettings settings)
