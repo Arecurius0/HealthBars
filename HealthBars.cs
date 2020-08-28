@@ -21,7 +21,7 @@ namespace HealthBars
         private const string IGNORE_FILE = "IgnoredEntities.txt";
         private List<string> IgnoredSum;
 
-        private List<string> Ignored = new List<string>
+        private readonly List<string> Ignored = new List<string>
         {
             // Delirium Ignores
             "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonEyes1",
@@ -139,7 +139,7 @@ namespace HealthBars
 
                 return ingameUI.BetrayalWindow.IsVisibleLocal || ingameUI.SellWindow.IsVisibleLocal ||
                        ingameUI.DelveWindow.IsVisibleLocal || ingameUI.IncursionWindow.IsVisibleLocal ||
-                       ingameUI.UnveilWindow.IsVisibleLocal || ingameUI.TreePanel.IsVisibleLocal || ingameUI.AtlasPanel.IsVisibleLocal ||
+                       ingameUI.UnveilWindow.IsVisibleLocal || ingameUI.TreePanel.IsVisibleLocal || ingameUI.Atlas.IsVisibleLocal ||
                        ingameUI.CraftBench.IsVisibleLocal;
             }, 250);
             ReadIgnoreFile();
@@ -389,15 +389,15 @@ namespace HealthBars
             string healthBarText = "";
             if (bar.Settings.ShowHealthText)
             {
-                healthBarText = $"{bar.Life.CurHP.ToString("N0")}";
+                healthBarText = $"{bar.Life.CurHP:N0}";
                 if (bar.Settings.ShowMaxHealthText)
-                    healthBarText += $"/{bar.Life.MaxHP.ToString("N0")}";
+                    healthBarText += $"/{bar.Life.MaxHP:N0}";
             } 
             else if (bar.Settings.ShowEnergyShieldText)
             {
-                healthBarText = $"{bar.Life.CurES.ToString("N0")}";
+                healthBarText = $"{bar.Life.CurES:N0}";
                 if (bar.Settings.ShowMaxEnergyShieldText)
-                    healthBarText += $"/{bar.Life.MaxES.ToString("N0")}";
+                    healthBarText += $"/{bar.Life.MaxES:N0}";
             }
 
             Graphics.DrawText(healthBarText,
