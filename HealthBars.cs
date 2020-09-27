@@ -45,7 +45,8 @@ namespace HealthBars
             "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonGoatRhoa1Vanish",
             "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonGoatRhoa2Vanish",
             "Metadata/Monsters/InvisibleFire/InvisibleFireAfflictionCorpseDegen",
-            "Metadata/Monsters/InvisibleFire/InvisibleFireAfflictionDemonColdDegenUnique"
+            "Metadata/Monsters/InvisibleFire/InvisibleFireAfflictionDemonColdDegenUnique",
+            "Metadata/Monsters/VolatileCore/VolatileDeadCore",
         };
 
         private IngameUIElements ingameUI;
@@ -148,7 +149,7 @@ namespace HealthBars
 
         public void HpBarWork(HealthBar healthBar)
         {
-            if (!healthBar.Settings.Enable)
+            if (healthBar.Settings == null || !healthBar.Settings.Enable)
             {
                 healthBar.Skip = true;
                 return;
@@ -188,6 +189,11 @@ namespace HealthBars
                 return;
             }
 
+            if (healthBar.Settings.ShowFloatingCombatDamage)
+            {
+                healthBar.DpsRefresh();
+            }
+            
             var _ = healthBar.IsHostile;
             var worldCoords = healthBar.Entity.Pos;
             worldCoords.Z += Settings.GlobalZ;
@@ -361,6 +367,42 @@ namespace HealthBars
                     new Vector2(bar.BackGround.Center.X, bar.BackGround.Center.Y - Graphics.Font.Size / 2f),
                     bar.Settings.HealthTextColor, FontAlign.Center);
             }
+
+            if (bar.Settings.ShowFloatingCombatDamage)
+            {
+                ShowDps(bar, new Vector2(bar.BackGround.Center.X, bar.BackGround.Y));
+            }
+        }
+
+        private void ShowDps(HealthBar healthBar, Vector2 point)
+        {
+            const int MARGIN_TOP = 2;
+            const int LAST_DAMAGE_ADD_SIZE = 7;
+            var fontSize = healthBar.Settings.FloatingCombatTextSize + LAST_DAMAGE_ADD_SIZE;
+            var textHeight = Graphics.MeasureText("100500", fontSize).Y;
+
+            point.Y -= (textHeight + MARGIN_TOP);
+            int i = 0;
+            foreach (var dps in healthBar.DpsQueue)
+            {
+                i++;
+                var damageColor = healthBar.Settings.FloatingCombatDamageColor;
+                var sign = string.Empty;
+                if (dps > 0)
+                {
+                    damageColor = healthBar.Settings.FloatingCombatHealColor;
+                    sign = "+";
+                }
+
+                string dpsText = $"{sign}{dps}";
+                Graphics.DrawText(dpsText, point, Color.Black, fontSize, FontAlign.Center);
+                point.Y -= (Graphics.DrawText(dpsText, point, damageColor, fontSize, FontAlign.Center).Y + MARGIN_TOP);
+                if (i == 1)
+                {
+                    fontSize -= LAST_DAMAGE_ADD_SIZE;
+                }
+            }
+            healthBar.DpsDequeue();
         }
 
         public override void EntityAdded(Entity Entity)
