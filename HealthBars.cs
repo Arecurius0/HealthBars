@@ -410,7 +410,7 @@ namespace HealthBars
             if (Entity.Type != EntityType.Monster && Entity.Type != EntityType.Player || Entity.Address == GameController.Player.Address ||
                 Entity.Type == EntityType.Daemon) return;
 
-            if (Entity.GetComponent<Life>() != null && !Entity.IsAlive) return;
+            if (Entity.HasComponent<Life>() && Entity.GetComponent<Life>() != null && !Entity.IsAlive) return;
             if (IgnoredSum.Any(x => Entity.Path.StartsWith(x))) return;
             Entity.SetHudComponent(new HealthBar(Entity, Settings));
         }
