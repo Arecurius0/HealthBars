@@ -436,7 +436,7 @@ namespace HealthBars
                 || Entity.Address == GameController.Player.Address 
                 || Entity.Type == EntityType.Daemon) return;
 
-            if (Entity.GetComponent<Life>() != null && !Entity.IsAlive) return;
+            if (Entity.HasComponent<Life>() && Entity.GetComponent<Life>() != null && !Entity.IsAlive) return;
             if (IgnoredSum.Any(x => Entity.Path.StartsWith(x))) return;
             if (Entity.Path.StartsWith("Metadata/Monsters/AtlasExiles/BasiliskInfluenceMonsters/BasiliskBurrowingViper") && (Entity.Rarity != MonsterRarity.Unique)) return;
             Entity.SetHudComponent(new HealthBar(Entity, Settings));

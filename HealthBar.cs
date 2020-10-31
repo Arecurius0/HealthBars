@@ -82,7 +82,7 @@ namespace HealthBars
 
         public float HpPercent => Life.HPPercentage;
         public float Distance => _distance.Value;
-        public Life Life => Entity.GetComponent<Life>();
+        public Life Life => Entity.HasComponent<Life>() ? Entity.GetComponent<Life>() : null;
         public Entity Entity { get; }
         public UnitSettings Settings { get; private set; }
         public CreatureType Type { get; private set; }
@@ -128,7 +128,7 @@ namespace HealthBars
             }
             else if (entity.HasComponent<Monster>())
             {
-                if (entity.IsHostile)
+                if (entity.IsHostile && entity.HasComponent<ObjectMagicProperties>())
                 {
                     switch (entity.GetComponent<ObjectMagicProperties>().Rarity)
                     {
@@ -210,6 +210,7 @@ namespace HealthBars
 
         private int GetFullHp()
         {
+            if (Life == null) return 0;
             return Life.CurHP + Life.CurES;
         }
     }
