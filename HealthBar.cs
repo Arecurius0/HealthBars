@@ -79,8 +79,7 @@ namespace HealthBars
                 return entityIsHostile;
             }
         }
-
-        public float HpPercent => Life.HPPercentage;
+        public float HpPercent => Life != null ? Life.HPPercentage : 0;
         public float Distance => _distance.Value;
         public Life Life => Entity.HasComponent<Life>() ? Entity.GetComponent<Life>() : null;
         public Entity Entity { get; }
@@ -128,9 +127,10 @@ namespace HealthBars
             }
             else if (entity.HasComponent<Monster>())
             {
-                if (entity.IsHostile && entity.HasComponent<ObjectMagicProperties>())
+                var objectMagicProperties = entity.GetComponent<ObjectMagicProperties>();
+                if (entity.IsHostile && objectMagicProperties != null)
                 {
-                    switch (entity.GetComponent<ObjectMagicProperties>().Rarity)
+                    switch (objectMagicProperties.Rarity)
                     {
                         case MonsterRarity.White:
                             Type = CreatureType.Normal;
