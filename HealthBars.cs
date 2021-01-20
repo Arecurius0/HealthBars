@@ -387,17 +387,17 @@ namespace HealthBars
             if (!bar.Settings.ShowHealthText && !bar.Settings.ShowEnergyShieldText) return;
 
             string healthBarText = "";
-            if (bar.Settings.ShowHealthText)
-            {
-                healthBarText = $"{bar.Life.CurHP:N0}";
-                if (bar.Settings.ShowMaxHealthText)
-                    healthBarText += $"/{bar.Life.MaxHP:N0}";
-            } 
-            else if (bar.Settings.ShowEnergyShieldText)
+            if (bar.Settings.ShowEnergyShieldText && bar.Life.CurES > 0)
             {
                 healthBarText = $"{bar.Life.CurES:N0}";
                 if (bar.Settings.ShowMaxEnergyShieldText)
                     healthBarText += $"/{bar.Life.MaxES:N0}";
+            } 
+            else if (bar.Settings.ShowHealthText)
+            {
+                healthBarText = $"{bar.Life.CurHP:N0}";
+                if (bar.Settings.ShowMaxHealthText)
+                    healthBarText += $"/{bar.Life.MaxHP:N0}";
             }
 
             Graphics.DrawText(healthBarText,
