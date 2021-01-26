@@ -18,35 +18,8 @@ namespace HealthBars
         private Camera camera;
         private bool CanTick = true;
         private readonly List<Element> ElementForSkip = new List<Element>();
-        private const string IGNORE_FILE = "IgnoredEntities.txt";
-        private List<string> IgnoredSum;
-
-        private List<string> Ignored = new List<string>
-        {
-            "Metadata/Monsters/Daemon/SilverPoolChillDaemon",
-            "Metadata/Monsters/Daemon",
-            "Metadata/Monsters/Frog/FrogGod/SilverOrb",
-            "Metadata/Monsters/Frog/FrogGod/SilverPool",
-            "Metadata/Monsters/Labyrinth/GoddessOfJusticeMapBoss@7",
-            "Metadata/Monsters/Labyrinth/GoddessOfJustice@",
-            "Metadata/Monsters/LeagueBetrayal/MasterNinjaCop",
-            //Delirium Ignores
-            "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonEyes1",
-            "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonEyes2",
-            "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonEyes3",
-            "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonSpikes",
-            "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonSpikes2",
-            "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonSpikes3",
-            "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonPimple1",
-            "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonPimple2",
-            "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonPimple3",
-            "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonGoatFillet1Vanish",
-            "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonGoatFillet2Vanish",
-            "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonGoatRhoa1Vanish",
-            "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonGoatRhoa2Vanish",
-            "Metadata/Monsters/InvisibleFire/InvisibleFireAfflictionCorpseDegen",
-            "Metadata/Monsters/InvisibleFire/InvisibleFireAfflictionDemonColdDegenUnique"
-        };
+        private string IGNORE_FILE { get; } = Path.Combine("config", "ignored_entities.txt");
+        private List<string> IgnoredEntities { get; set; }
 
         private IngameUIElements ingameUI;
         private CachedValue<bool> ingameUICheckVisible;
@@ -90,53 +63,18 @@ namespace HealthBars
 
             return true;
         }
-        private void CreateIgnoreFile()
-        {
-            var path = $"{DirectoryFullName}\\{IGNORE_FILE}";
-            
-            var defaultConfig =
-            #region default Config
-                "#default ignores\n" +
-                "Metadata/Monsters/Daemon/SilverPoolChillDaemon\n" +
-                "Metadata/Monsters/Daemon\n" +
-                "Metadata/Monsters/Frog/FrogGod/SilverOrb\n" +
-                "Metadata/Monsters/Frog/FrogGod/SilverPool\n" +
-                "Metadata/Monsters/Labyrinth/GoddessOfJusticeMapBoss@7\n" +
-                "Metadata/Monsters/Labyrinth/GoddessOfJustice@\n" +
-                "Metadata/Monsters/LeagueBetrayal/MasterNinjaCop\n" +
-                "#Delirium Ignores\n" +
-                "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonEyes1\n" +
-                "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonEyes2\n" +
-                "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonEyes3\n" +
-                "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonSpikes\n" +
-                "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonSpikes2\n" +
-                "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonSpikes3\n" +
-                "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonPimple1\n" +
-                "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonPimple2\n" +
-                "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonPimple3\n" +
-                "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonGoatFillet1Vanish\n" +
-                "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonGoatFillet2Vanish\n" +
-                "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonGoatRhoa1Vanish\n" +
-                "Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonGoatRhoa2Vanish\n" +
-                "Metadata/Monsters/InvisibleFire/InvisibleFireAfflictionCorpseDegen\n" +
-                "Metadata/Monsters/InvisibleFire/InvisibleFireAfflictionDemonColdDegenUnique\n";
-            #endregion
-            if (File.Exists(path)) return;
-            using (var streamWriter = new StreamWriter(path, true))
-            {
-                streamWriter.Write(defaultConfig);
-                streamWriter.Close();
-            }
-        }
+
         private void ReadIgnoreFile()
         {
-            var path = $"{DirectoryFullName}\\{IGNORE_FILE}";
-            if (File.Exists(path)) 
+            var path = Path.Combine(DirectoryFullName, IGNORE_FILE);
+            if (File.Exists(path))
             {
-                var text = File.ReadAllLines(path).Where(line => !string.IsNullOrWhiteSpace(line) && !line.StartsWith("#")).ToList();
-                IgnoredSum = Ignored.Concat(text).ToList();
-            } else 
-                CreateIgnoreFile();
+                IgnoredEntities = File.ReadAllLines(path).Where(line => !string.IsNullOrWhiteSpace(line) && !line.StartsWith("#")).ToList();
+            } 
+            else
+            {
+                LogError($"Ignored entities file does not exist. Path: {path}");
+            }
         }
 
         public override void AreaChange(AreaInstance area)
@@ -379,7 +317,7 @@ namespace HealthBars
                 || Entity.Type == EntityType.Daemon) return;
 
             if (Entity.GetComponent<Life>() != null && !Entity.IsAlive) return;
-            if (IgnoredSum.Any(x => Entity.Path.StartsWith(x))) return;
+            if (IgnoredEntities.Any(x => Entity.Path.StartsWith(x))) return;
             Entity.SetHudComponent(new HealthBar(Entity, Settings));
         }
     }
