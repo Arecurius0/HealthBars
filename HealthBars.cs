@@ -149,7 +149,7 @@ namespace HealthBars
 
         public void HpBarWork(HealthBar healthBar)
         {
-            if (healthBar.Settings == null || !healthBar.Settings.Enable)
+            if (healthBar.Life == null || healthBar.Settings == null || !healthBar.Settings.Enable)
             {
                 healthBar.Skip = true;
                 return;
