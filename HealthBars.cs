@@ -296,7 +296,8 @@ namespace HealthBars
         {
             CanTick = true;
 
-            if (ingameUICheckVisible.Value
+            if (ingameUICheckVisible == null
+                || ingameUICheckVisible.Value
                 || camera == null
                 || GameController.Area.CurrentArea.IsTown && !Settings.ShowInTown)
             {
