@@ -40,6 +40,8 @@ namespace HealthBars
 
         public HealthBar(Entity entity, HealthBarsSettings settings)
         {
+            if (entity == null) return;
+
             Entity = entity;
             _distance = new TimeCache<float>(() => entity.DistancePlayer, 200);
 
@@ -55,12 +57,22 @@ namespace HealthBars
             //CanNotDie = entity.GetComponent<Stats>().StatDictionary.ContainsKey(GameStat.CannotDie);
             CanNotDie = entity.Path.StartsWith("Metadata/Monsters/Totems/Labyrinth");
 
-            if (entity.HasComponent<ObjectMagicProperties>() && entity.GetComponent<ObjectMagicProperties>().Mods.Contains("MonsterConvertsOnDeath_"))
+            if (entity.HasComponent<ObjectMagicProperties>())
             {
-                OnHostileChange = () =>
+                var magicProperties = entity.GetComponent<ObjectMagicProperties>();
+
+                if (magicProperties != null)
                 {
-                    if (_init) Update(Entity, settings);
-                };
+                    var mods = magicProperties.Mods;
+
+                    if (mods != null && mods.Contains("MonsterConvertsOnDeath_"))
+                    {
+                        OnHostileChange = () =>
+                        {
+                            if (_init) Update(Entity, settings);
+                        };
+                    }
+                }
             }
         }
 
