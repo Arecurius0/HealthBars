@@ -62,6 +62,10 @@ namespace HealthBars
             "Metadata/Monsters/LeagueBetrayal/FortTurret/FortTurret1Safehouse",
             "Metadata/Monsters/LeagueBetrayal/FortTurret/FortTurret1",
             "Metadata/Monsters/LeagueBetrayal/MasterNinjaCop",
+            "Metadata/Monsters/LeagueBetrayal/BetrayalRikerMortarDaemon",
+            "Metadata/Monsters/LeagueBetrayal/BetrayalBoneNovaDaemon",
+            "Metadata/Monsters/LeagueBetrayal/BetrayalCatarinaPillarDaemon_",
+            "Metadata/Monsters/LeagueBetrayal/BetrayalUpgrades/BetrayalDaemonCorpseConsume",
             
             // Legion Ignores
             "Metadata/Monsters/LegionLeague/LegionVaalGeneralProjectileDaemon",
@@ -80,6 +84,7 @@ namespace HealthBars
             "Metadata/Monsters/InvisibleFire/InvisibleFireDoedreSewers",
             "Metadata/Monsters/InvisibleFire/InvisibleFireDelveFlameTornadoSpiked",
             "Metadata/Monsters/InvisibleFire/InvisibleHolyCannon",
+            "Metadata/Monsters/InvisibleFire/DelveVaalBossInvisibleLight",
 
             "Metadata/Monsters/InvisibleCurse/InvisibleFrostbiteStationary",
             "Metadata/Monsters/InvisibleCurse/InvisibleConductivityStationary",
@@ -98,6 +103,12 @@ namespace HealthBars
             "Metadata/Monsters/Daemon/SilverPoolChillDaemon",
             "Metadata/Monsters/AvariusCasticus/AvariusCasticusStatue",
             "Metadata/Monsters/Maligaro/MaligaroDesecrate",
+
+            "Metadata/Monsters/Avatar/AvatarMagmaOrbDaemon",
+            "Metadata/Monsters/Monkeys/FlameBearerTalismanT2Ghost",
+            "Metadata/Monsters/Totems/TalismanTotem/TalismanTotemDeathscape",
+            "Metadata/Monsters/BeehiveBehemoth/BeehiveBehemothSwampDaemon",
+            "Metadata/Monsters/VaalWraith/VaalWraithChampionMinion",
             
             // Synthesis
             "Metadata/Monsters/LeagueSynthesis/SynthesisDroneBossTurret1",
@@ -125,6 +136,23 @@ namespace HealthBars
             "Metadata/Monsters/LeagueBestiary/ModDaemonSandLeaperExplode1",
             "Metadata/Monsters/LeagueBestiary/ModDaemonStampede1",
             "Metadata/Monsters/LeagueBestiary/ModDaemonGraspingPincers1",
+            "Metadata/Monsters/LeagueBestiary/ModDaemonPouncingShade1",
+            "Metadata/Monsters/LeagueBestiary/ModDaemonPouncingShadeQuickHit",
+            "Metadata/Monsters/LeagueBestiary/ModDaemonFire1",
+            "Metadata/Monsters/LeagueBestiary/ModDaemonVultureBomb1",
+            "Metadata/Monsters/LeagueBestiary/ModDaemonVultureBombCast1",
+            "Metadata/Monsters/LeagueBestiary/ModDaemonParasiticSquid1",
+            "Metadata/Monsters/LeagueBestiary/ModDaemonBloodRaven1",
+            "Metadata/Monsters/LeagueBestiary/SandLeaperBestiaryClone",
+            "Metadata/Monsters/LeagueBestiary/SpiderPlagueBestiaryExplode",
+            "Metadata/Monsters/LeagueBestiary/ParasiticSquidBestiaryClone",
+            "Metadata/Monsters/LeagueBestiary/HellionBestiaryClone",
+            "Metadata/Monsters/LeagueBestiary/BestiarySpiderCocoon",
+
+            // Ritual
+            "Metadata/Monsters/LeagueRitual/GoldenCoinDaemon",
+            "Metadata/Monsters/LeagueRitual/GenericLifeDaemon",
+            "Metadata/Monsters/LeagueRitual/GenericChargesDaemon",
         };
 
         private IngameUIElements ingameUI;
