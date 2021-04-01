@@ -34,17 +34,16 @@ namespace HealthBars
         public RectangleF BackGround;
         public bool CanNotDie;
         public double DiedFrames = 0;
-        public Func<bool> IsHidden;
         private bool isHostile;
         private readonly Action OnHostileChange = delegate { };
         public bool Skip = false;
 
         public HealthBar(Entity entity, HealthBarsSettings settings)
         {
+            if (entity == null) return;
+
             Entity = entity;
             _distance = new TimeCache<float>(() => entity.DistancePlayer, 200);
-
-            IsHidden = () => entity.IsHidden;
 
             // If ignored entity found, skip
             foreach (var _entity in IgnoreEntitiesList)
@@ -58,12 +57,22 @@ namespace HealthBars
             //CanNotDie = entity.GetComponent<Stats>().StatDictionary.ContainsKey(GameStat.CannotDie);
             CanNotDie = entity.Path.StartsWith("Metadata/Monsters/Totems/Labyrinth");
 
-            if (entity.HasComponent<ObjectMagicProperties>() && entity.GetComponent<ObjectMagicProperties>().Mods.Contains("MonsterConvertsOnDeath_"))
+            if (entity.HasComponent<ObjectMagicProperties>())
             {
-                OnHostileChange = () =>
+                var magicProperties = entity.GetComponent<ObjectMagicProperties>();
+
+                if (magicProperties != null)
                 {
-                    if (_init) Update(Entity, settings);
-                };
+                    var mods = magicProperties.Mods;
+
+                    if (mods != null && mods.Contains("MonsterConvertsOnDeath_"))
+                    {
+                        OnHostileChange = () =>
+                        {
+                            if (_init) Update(Entity, settings);
+                        };
+                    }
+                }
             }
         }
 
@@ -82,9 +91,7 @@ namespace HealthBars
                 return entityIsHostile;
             }
         }
-
-        public int MaxHp { get; private set; }
-        public float HpPercent { get; set; }
+        public float HpPercent => Life != null ? Life.HPPercentage : 0;
         public float Distance => _distance.Value;
         public Life Life => Entity.HasComponent<Life>() ? Entity.GetComponent<Life>() : null;
         public Entity Entity { get; }
@@ -96,7 +103,7 @@ namespace HealthBars
         {
             get
             {
-                if (IsHidden())
+                if (IsHidden(Entity))
                     return Color.LightGray;
 
                 if (HpPercent <= 0.1f)
@@ -105,6 +112,20 @@ namespace HealthBars
                 return Settings.Color;
             }
         }
+
+        private bool IsHidden(Entity entity)
+        {
+            try
+            {
+                return entity.IsHidden;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
 
         public float HpWidth { get; set; }
         public float EsWidth { get; set; }
@@ -118,33 +139,38 @@ namespace HealthBars
             }
             else if (entity.HasComponent<Monster>())
             {
-                if (entity.IsHostile && entity.HasComponent<ObjectMagicProperties>())
+                if (entity.IsHostile)
                 {
-                    switch (entity.GetComponent<ObjectMagicProperties>().Rarity)
+                    var objectMagicProperties = entity.GetComponent<ObjectMagicProperties>();
+
+                    if (objectMagicProperties != null)
                     {
-                        case MonsterRarity.White:
-                            Type = CreatureType.Normal;
-                            Settings = settings.NormalEnemy;
-                            break;
+                        switch (objectMagicProperties.Rarity)
+                        {
+                            case MonsterRarity.White:
+                                Type = CreatureType.Normal;
+                                Settings = settings.NormalEnemy;
+                                break;
 
-                        case MonsterRarity.Magic:
-                            Type = CreatureType.Magic;
-                            Settings = settings.MagicEnemy;
-                            break;
+                            case MonsterRarity.Magic:
+                                Type = CreatureType.Magic;
+                                Settings = settings.MagicEnemy;
+                                break;
 
-                        case MonsterRarity.Rare:
-                            Settings = settings.RareEnemy;
-                            Type = CreatureType.Rare;
-                            break;
+                            case MonsterRarity.Rare:
+                                Settings = settings.RareEnemy;
+                                Type = CreatureType.Rare;
+                                break;
 
-                        case MonsterRarity.Unique:
-                            Settings = settings.UniqueEnemy;
-                            Type = CreatureType.Unique;
-                            break;
-                        default:
-                            Settings = settings.Minions;
-                            Type = CreatureType.Minion;
-                            break;
+                            case MonsterRarity.Unique:
+                                Settings = settings.UniqueEnemy;
+                                Type = CreatureType.Unique;
+                                break;
+                            default:
+                                Settings = settings.Minions;
+                                Type = CreatureType.Minion;
+                                break;
+                        }
                     }
                 }
                 else
@@ -155,7 +181,6 @@ namespace HealthBars
             }
 
             _lastHp = GetFullHp();
-            MaxHp = Life.MaxHP;
             _init = true;
         }
 

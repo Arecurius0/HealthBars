@@ -8,16 +8,16 @@ namespace HealthBars
     {
         public HealthBarsSettings()
         {
-            Enable = new ToggleNode(false);
+            Enable = new ToggleNode(true);
             ShowInTown = new ToggleNode(false);
             ShowES = new ToggleNode(true);
             ShowEnemies = new ToggleNode(true);
             Players = new UnitSettings(0x008000ff, 0);
             Minions = new UnitSettings(0x90ee90ff, 0);
-            NormalEnemy = new UnitSettings(0xff0000ff, 0, 0x66ff66ff, false);
-            MagicEnemy = new UnitSettings(0xff0000ff, 0x8888ffff, 0x66ff99ff, false);
-            RareEnemy = new UnitSettings(0xff0000ff, 0xffff77ff, 0x66ff99ff, false);
-            UniqueEnemy = new UnitSettings(0xff0000ff, 0xffa500ff, 0x66ff99ff, false);
+            NormalEnemy = new UnitSettings(0xff0000ff, 0, 0x66ff66ff, false, false);
+            MagicEnemy = new UnitSettings(0xff0000ff, 0x8888ffff, 0x66ff99ff, false, false);
+            RareEnemy = new UnitSettings(0xff0000ff, 0xffff77ff, 0x66ff99ff, false, false);
+            UniqueEnemy = new UnitSettings(0xff0000ff, 0xffa500ff, 0x66ff99ff, false, false);
             ShowDebuffPanel = new ToggleNode(false);
             DebuffPanelIconSize = new RangeNode<int>(20, 15, 40);
             GlobalZ = new RangeNode<int>(-100, -300, 300);
@@ -82,8 +82,12 @@ namespace HealthBars
             PercentTextColor = 0xffffffff;
             HealthTextColor = 0xffffffff;
             HealthTextColorUnder10Percent = 0xffff00ff;
-            ShowPercents = new ToggleNode(false);
+            ShowHealthPercents = new ToggleNode(false);
+            ShowEnergyShieldPercents = new ToggleNode(false);
             ShowHealthText = new ToggleNode(false);
+            ShowMaxHealthText = new ToggleNode(false);
+            ShowEnergyShieldText = new ToggleNode(false);
+            ShowMaxEnergyShieldText = new ToggleNode(false);
             ShowFloatingCombatDamage = new ToggleNode(false);
             FloatingCombatTextSize = new RangeNode<int>(15, 10, 30);
             FloatingCombatDamageColor = SharpDX.Color.Yellow;
@@ -93,11 +97,15 @@ namespace HealthBars
             FloatingCombatStackSize = new RangeNode<int>(1, 1, 10);
         }
 
-        public UnitSettings(uint color, uint outline, uint percentTextColor, bool showText) : this(color, outline)
+        public UnitSettings(uint color, uint outline, uint percentTextColor, bool showText, bool showMaxText) : this(color, outline)
         {
             PercentTextColor = percentTextColor;
-            ShowPercents.Value = showText;
+            ShowHealthPercents.Value = showText;
+            ShowEnergyShieldPercents.Value = showText;
             ShowHealthText.Value = showText;
+            ShowMaxHealthText.Value = showMaxText;
+            ShowEnergyShieldText.Value = showText;
+            ShowMaxEnergyShieldText.Value = showMaxText;
         }
 
         public RangeNode<float> Width { get; set; }
@@ -109,8 +117,12 @@ namespace HealthBars
         public ColorNode PercentTextColor { get; set; }
         public ColorNode HealthTextColor { get; set; }
         public ColorNode HealthTextColorUnder10Percent { get; set; }
-        public ToggleNode ShowPercents { get; set; }
+        public ToggleNode ShowHealthPercents { get; set; }
+        public ToggleNode ShowEnergyShieldPercents { get; set; }
         public ToggleNode ShowHealthText { get; set; }
+        public ToggleNode ShowMaxHealthText { get; set; }
+        public ToggleNode ShowEnergyShieldText { get; set; }
+        public ToggleNode ShowMaxEnergyShieldText { get; set; }
         public RangeNode<int> TextSize { get; set; }
         [Menu("Floating Combat Text")]
         public ToggleNode ShowFloatingCombatDamage { get; set; }
