@@ -53,11 +53,13 @@ namespace HealthBars
                 windowRectangle = GameController.Window.GetWindowRectangleReal();
                 windowSize = new Size2F(windowRectangle.Width / 2560, windowRectangle.Height / 1600);
                 camera = GameController.Game.IngameState.Camera;
+                var ultimatumIsVisibleLocal = typeof(IngameUIElements).GetProperty("UltimatumProgressWindow") != null 
+                                           && ingameUI.UltimatumProgressWindow.IsVisibleLocal;
 
                 return ingameUI.BetrayalWindow.IsVisibleLocal || ingameUI.SellWindow.IsVisibleLocal ||
                        ingameUI.DelveWindow.IsVisibleLocal || ingameUI.IncursionWindow.IsVisibleLocal ||
-                       ingameUI.UnveilWindow.IsVisibleLocal || ingameUI.TreePanel.IsVisibleLocal || ingameUI.AtlasPanel.IsVisibleLocal ||
-                       ingameUI.CraftBench.IsVisibleLocal;
+                       ingameUI.UnveilWindow.IsVisibleLocal || ingameUI.TreePanel.IsVisibleLocal || ingameUI.Atlas.IsVisibleLocal ||
+                       ingameUI.CraftBench.IsVisibleLocal || ultimatumIsVisibleLocal;
             }, 250);
             ReadIgnoreFile();
 
