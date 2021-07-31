@@ -100,3 +100,7 @@ Metadata/Monsters/LeagueBestiary/ModDaemonCorpseEruption
 Metadata/Monsters/LeagueBestiary/ModDaemonSandLeaperExplode1
 Metadata/Monsters/LeagueBestiary/ModDaemonStampede1
 Metadata/Monsters/LeagueBestiary/ModDaemonGraspingPincers1
+
+# Traps
+Metadata/Monsters/traps/MonsterFireTrap2
+Metadata/Monsters/traps/MonsterBlastRainTrap
