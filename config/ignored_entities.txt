@@ -1,3 +1,8 @@
+# General
+Metadata/Monsters/Labyrinth/GoddessOfJustice
+Metadata/Monsters/traps/MonsterFireTrap2
+Metadata/Monsters/traps/MonsterBlastRainTrap
+
 # Delirium Ignores
 Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonEyes1
 Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonEyes2
@@ -100,7 +105,3 @@ Metadata/Monsters/LeagueBestiary/ModDaemonCorpseEruption
 Metadata/Monsters/LeagueBestiary/ModDaemonSandLeaperExplode1
 Metadata/Monsters/LeagueBestiary/ModDaemonStampede1
 Metadata/Monsters/LeagueBestiary/ModDaemonGraspingPincers1
-
-# Traps
-Metadata/Monsters/traps/MonsterFireTrap2
-Metadata/Monsters/traps/MonsterBlastRainTrap
