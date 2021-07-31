@@ -18,7 +18,6 @@ namespace HealthBars
             MagicEnemy = new UnitSettings(0x8888ffff, 0x8888ffff, 0x66ff99ff, false, 100, 15);
             RareEnemy = new UnitSettings(0xf4ff19ff, 0xf4ff19ff, 0x66ff99ff, false, 125, 20);
             UniqueEnemy = new UnitSettings(0xffa500ff, 0xffa500ff, 0x66ff99ff, true, 200, 25);
-            ShowDebuffPanel = new ToggleNode(false);
             DebuffPanelIconSize = new RangeNode<int>(20, 15, 40);
             GlobalZ = new RangeNode<int>(-100, -300, 300);
             PlayerZ = new RangeNode<int>(-100, -300, 300);
@@ -43,8 +42,6 @@ namespace HealthBars
         public UnitSettings RareEnemy { get; set; }
         [Menu("Unique enemy", 6)]
         public UnitSettings UniqueEnemy { get; set; }
-        [Menu("Show Debuff Panel")]
-        public ToggleNode ShowDebuffPanel { get; set; }
         [Menu("Size debuff icon")]
         public RangeNode<int> DebuffPanelIconSize { get; set; }
         [Menu("Z")]
@@ -74,6 +71,7 @@ namespace HealthBars
         public UnitSettings(uint color, uint outline)
         {
             Enable = new ToggleNode(true);
+            ShowDebuffPanel = new ToggleNode(false);
             Width = new RangeNode<float>(100, 20, 250);
             Height = new RangeNode<float>(20, 5, 150);
             Color = color;
@@ -97,6 +95,8 @@ namespace HealthBars
             Height = new RangeNode<float>(height, 5, 150);
         }
 
+        public ToggleNode Enable { get; set; }
+        public ToggleNode ShowDebuffPanel { get; set; }
         public RangeNode<float> Width { get; set; }
         public RangeNode<float> Height { get; set; }
         public ColorNode Color { get; set; }
@@ -110,6 +110,5 @@ namespace HealthBars
         public ToggleNode ShowEnergyShieldPercents { get; set; }
         public ToggleNode ShowHealthText { get; set; }
         public ToggleNode ShowEnergyShieldText { get; set; }
-        public ToggleNode Enable { get; set; }
     }
 }
