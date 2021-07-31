@@ -86,13 +86,7 @@ namespace HealthBars
             ShowEnergyShieldPercents = new ToggleNode(false);
             ShowHealthText = new ToggleNode(false);
             ShowEnergyShieldText = new ToggleNode(false);
-            ShowFloatingCombatDamage = new ToggleNode(false);
-            FloatingCombatTextSize = new RangeNode<int>(15, 10, 30);
-            FloatingCombatDamageColor = SharpDX.Color.Yellow;
-            FloatingCombatHealColor = SharpDX.Color.Lime;
             BackGround = SharpDX.Color.Black;
-            TextSize = new RangeNode<int>(10, 5, 25);
-            FloatingCombatStackSize = new RangeNode<int>(1, 1, 10);
         }
 
         public UnitSettings(uint color, uint outline, uint percentTextColor, bool showHealthText, int width, int height) : this(color, outline)
@@ -116,18 +110,6 @@ namespace HealthBars
         public ToggleNode ShowEnergyShieldPercents { get; set; }
         public ToggleNode ShowHealthText { get; set; }
         public ToggleNode ShowEnergyShieldText { get; set; }
-        public RangeNode<int> TextSize { get; set; }
-        [Menu("Floating Combat Text")]
-        public ToggleNode ShowFloatingCombatDamage { get; set; }
-        [Menu("Damage Color")]
-        public ColorNode FloatingCombatDamageColor { get; set; }
-        [Menu("Heal Color")]
-        public ColorNode FloatingCombatHealColor { get; set; }
-        [Menu("Text Size")]
-        public RangeNode<int> FloatingCombatTextSize { get; set; }
-        [Menu("Number of Lines")]
-        public RangeNode<int> FloatingCombatStackSize { get; set; }
-        [Menu("Enable")]
         public ToggleNode Enable { get; set; }
     }
 }
