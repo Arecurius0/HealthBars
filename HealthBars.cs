@@ -312,11 +312,25 @@ namespace HealthBars
 
             Graphics.DrawText(bar.DebuffPanel.Bleed.Count.ToString(),
                 new Vector2(bar.BackGround.Left, bar.BackGround.Top - Graphics.Font.Size),
-                Color.Red);
+                bar.DebuffPanel.Bleed.Count == 8 ? Color.Green : Color.Red);
 
             Graphics.DrawText(bar.DebuffPanel.CorruptedBlood.Count.ToString(),
-                new Vector2(bar.BackGround.Left + 10, bar.BackGround.Top - Graphics.Font.Size),
-                Color.Red);
+                new Vector2(bar.BackGround.Left + 20, bar.BackGround.Top - Graphics.Font.Size),
+                bar.DebuffPanel.CorruptedBlood.Count == 10 ? Color.Green : Color.Red);
+
+            if (bar.DebuffPanel.CurseVulnerability != null)
+            {
+                Graphics.DrawText($"{Convert.ToInt32(bar.DebuffPanel.CurseVulnerability.Timer).ToString()}",
+                    new Vector2(bar.BackGround.Left + 40, bar.BackGround.Top - Graphics.Font.Size),
+                    bar.DebuffPanel.CurseVulnerability.Timer > 2 ? Color.Green : Color.Red);
+            }
+
+            if (bar.DebuffPanel.AuraPride != null)
+            {
+                Graphics.DrawText("P",
+                    new Vector2(bar.BackGround.Left + 60, bar.BackGround.Top - Graphics.Font.Size),
+                    Color.Green);
+            }
         }
 
         private string FloatToPercentString (float number)
