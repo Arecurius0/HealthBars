@@ -264,6 +264,7 @@ namespace HealthBars
 
             ShowPercents(bar);
             ShowNumbersInHealthbar(bar);
+            ShowDebuffPanel(bar);
         }
 
         private void ShowNumbersInHealthbar(HealthBar bar)
@@ -303,6 +304,33 @@ namespace HealthBars
             Graphics.DrawText(FloatToPercentString(percents),
                 new Vector2(bar.BackGround.Right, bar.BackGround.Center.Y - Graphics.Font.Size / 2f),
                 bar.Settings.PercentTextColor);
+        }
+
+        private void ShowDebuffPanel(HealthBar bar)
+        {
+            if (!bar.Settings.ShowDebuffPanel) return;
+
+            Graphics.DrawText(bar.DebuffPanel.Bleed.Count.ToString(),
+                new Vector2(bar.BackGround.Left, bar.BackGround.Top - Graphics.Font.Size),
+                bar.DebuffPanel.Bleed.Count == 8 ? Color.Green : Color.Red);
+
+            Graphics.DrawText(bar.DebuffPanel.CorruptedBlood.Count.ToString(),
+                new Vector2(bar.BackGround.Left + 20, bar.BackGround.Top - Graphics.Font.Size),
+                bar.DebuffPanel.CorruptedBlood.Count == 10 ? Color.Green : Color.Red);
+
+            if (bar.DebuffPanel.CurseVulnerability != null)
+            {
+                Graphics.DrawText($"{Convert.ToInt32(bar.DebuffPanel.CurseVulnerability.Timer).ToString()}",
+                    new Vector2(bar.BackGround.Left + 40, bar.BackGround.Top - Graphics.Font.Size),
+                    bar.DebuffPanel.CurseVulnerability.Timer > 2 ? Color.Green : Color.Red);
+            }
+
+            if (bar.DebuffPanel.AuraPride != null)
+            {
+                Graphics.DrawText("P",
+                    new Vector2(bar.BackGround.Left + 60, bar.BackGround.Top - Graphics.Font.Size),
+                    Color.Green);
+            }
         }
 
         private string FloatToPercentString (float number)

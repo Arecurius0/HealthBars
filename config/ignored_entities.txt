@@ -1,3 +1,8 @@
+# General
+Metadata/Monsters/Labyrinth/GoddessOfJustice
+Metadata/Monsters/traps/MonsterFireTrap2
+Metadata/Monsters/traps/MonsterBlastRainTrap
+
 # Delirium Ignores
 Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonEyes1
 Metadata/Monsters/LeagueAffliction/DoodadDaemons/DoodadDaemonEyes2

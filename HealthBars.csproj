@@ -74,6 +74,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DebuffPanel.cs" />
     <Compile Include="HealthBar.cs" />
     <Compile Include="HealthBars.cs" />
     <Compile Include="HealthBarsSettings.cs" />

@@ -18,7 +18,6 @@ namespace HealthBars
             MagicEnemy = new UnitSettings(0x8888ffff, 0x8888ffff, 0x66ff99ff, false, 100, 15);
             RareEnemy = new UnitSettings(0xf4ff19ff, 0xf4ff19ff, 0x66ff99ff, false, 125, 20);
             UniqueEnemy = new UnitSettings(0xffa500ff, 0xffa500ff, 0x66ff99ff, true, 200, 25);
-            ShowDebuffPanel = new ToggleNode(false);
             DebuffPanelIconSize = new RangeNode<int>(20, 15, 40);
             GlobalZ = new RangeNode<int>(-100, -300, 300);
             PlayerZ = new RangeNode<int>(-100, -300, 300);
@@ -43,8 +42,6 @@ namespace HealthBars
         public UnitSettings RareEnemy { get; set; }
         [Menu("Unique enemy", 6)]
         public UnitSettings UniqueEnemy { get; set; }
-        [Menu("Show Debuff Panel")]
-        public ToggleNode ShowDebuffPanel { get; set; }
         [Menu("Size debuff icon")]
         public RangeNode<int> DebuffPanelIconSize { get; set; }
         [Menu("Z")]
@@ -74,6 +71,7 @@ namespace HealthBars
         public UnitSettings(uint color, uint outline)
         {
             Enable = new ToggleNode(true);
+            ShowDebuffPanel = new ToggleNode(false);
             Width = new RangeNode<float>(100, 20, 250);
             Height = new RangeNode<float>(20, 5, 150);
             Color = color;
@@ -86,13 +84,7 @@ namespace HealthBars
             ShowEnergyShieldPercents = new ToggleNode(false);
             ShowHealthText = new ToggleNode(false);
             ShowEnergyShieldText = new ToggleNode(false);
-            ShowFloatingCombatDamage = new ToggleNode(false);
-            FloatingCombatTextSize = new RangeNode<int>(15, 10, 30);
-            FloatingCombatDamageColor = SharpDX.Color.Yellow;
-            FloatingCombatHealColor = SharpDX.Color.Lime;
             BackGround = SharpDX.Color.Black;
-            TextSize = new RangeNode<int>(10, 5, 25);
-            FloatingCombatStackSize = new RangeNode<int>(1, 1, 10);
         }
 
         public UnitSettings(uint color, uint outline, uint percentTextColor, bool showHealthText, int width, int height) : this(color, outline)
@@ -103,6 +95,8 @@ namespace HealthBars
             Height = new RangeNode<float>(height, 5, 150);
         }
 
+        public ToggleNode Enable { get; set; }
+        public ToggleNode ShowDebuffPanel { get; set; }
         public RangeNode<float> Width { get; set; }
         public RangeNode<float> Height { get; set; }
         public ColorNode Color { get; set; }
@@ -116,18 +110,5 @@ namespace HealthBars
         public ToggleNode ShowEnergyShieldPercents { get; set; }
         public ToggleNode ShowHealthText { get; set; }
         public ToggleNode ShowEnergyShieldText { get; set; }
-        public RangeNode<int> TextSize { get; set; }
-        [Menu("Floating Combat Text")]
-        public ToggleNode ShowFloatingCombatDamage { get; set; }
-        [Menu("Damage Color")]
-        public ColorNode FloatingCombatDamageColor { get; set; }
-        [Menu("Heal Color")]
-        public ColorNode FloatingCombatHealColor { get; set; }
-        [Menu("Text Size")]
-        public RangeNode<int> FloatingCombatTextSize { get; set; }
-        [Menu("Number of Lines")]
-        public RangeNode<int> FloatingCombatStackSize { get; set; }
-        [Menu("Enable")]
-        public ToggleNode Enable { get; set; }
     }
 }
