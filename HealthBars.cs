@@ -54,10 +54,10 @@ namespace HealthBars
                 windowSize = new Size2F(windowRectangle.Width / 2560, windowRectangle.Height / 1600);
                 camera = GameController.Game.IngameState.Camera;
                 
-                return ingameUI.BetrayalWindow.IsVisibleLocal || ingameUI.SellWindow.IsVisibleLocal ||
+                return ingameUI.SyndicatePanel.IsVisibleLocal || ingameUI.SellWindow.IsVisibleLocal ||
                        ingameUI.DelveWindow.IsVisibleLocal || ingameUI.IncursionWindow.IsVisibleLocal ||
                        ingameUI.UnveilWindow.IsVisibleLocal || ingameUI.TreePanel.IsVisibleLocal || ingameUI.Atlas.IsVisibleLocal ||
-                       ingameUI.CraftBench.IsVisibleLocal || ingameUI.UltimatumProgressWindow.IsVisibleLocal;
+                       ingameUI.CraftBench.IsVisibleLocal || ingameUI.UltimatumPanel.IsVisibleLocal;
             }, 250);
             ReadIgnoreFile();
 
@@ -91,9 +91,10 @@ namespace HealthBars
             if (!healthBar.Entity.IsAlive) return true;
             if (healthBar.HpPercent < 0.001f) return true;
             if (healthBar.Type == CreatureType.Minion && healthBar.HpPercent * 100 > Settings.ShowMinionOnlyBelowHp) return true;
-/*            if (healthBar.Entity.League == LeagueType.Legion && healthBar.Entity.IsHidden 
+            if (healthBar.Entity.League == LeagueType.Legion && healthBar.Entity.IsHidden
                 && healthBar.Entity.Rarity != MonsterRarity.Unique 
-                && healthBar.Entity.Rarity != MonsterRarity.Rare) return true;*/
+                && healthBar.Entity.Rarity != MonsterRarity.Rare
+                && Settings.HideHiddenLegionMonsters) return true;
 
             return false;
         }
@@ -340,6 +341,7 @@ namespace HealthBars
 
         public override void EntityAdded(Entity Entity)
         {
+            if (Entity == null) return;
             if (Entity.Type != EntityType.Monster && Entity.Type != EntityType.Player 
                 || Entity.Address == GameController.Player.Address 
                 || Entity.Type == EntityType.Daemon) return;

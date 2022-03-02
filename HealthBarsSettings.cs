@@ -56,12 +56,12 @@ namespace HealthBars
         public ToggleNode ImGuiRender { get; set; } = new ToggleNode(true);
         public RangeNode<int> LimitDrawDistance { get; set; } = new RangeNode<int>(133, 0, 1000);
         [Menu("Rounding")]
-        
         public RangeNode<float> Rounding { get; set; } = new RangeNode<float>(0, 0, 64);
         public ToggleNode MultiThreading { get; set; } = new ToggleNode(false);
         public RangeNode<int> MultiThreadingCountEntities { get; set; } = new RangeNode<int>(10, 1, 200);
         public RangeNode<int> ShowMinionOnlyBelowHp { get; set; } = new RangeNode<int>(50, 1, 100);
         public ToggleNode SelfHealthBarShow { get; set; } = new ToggleNode(true);
+        public ToggleNode HideHiddenLegionMonsters { get; set; } = new ToggleNode(true);
         public ToggleNode Enable { get; set; }
         
     }
